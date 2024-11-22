@@ -23,8 +23,23 @@ let users = [
   { id: "3", name: "data3" },
 ];
 
+///get single post // request params
+app.get("/api/users/:id", (req, res) => {
+  const userId = req.params.id;
+  const user = users.filter((u) => {
+    return u.id === userId;
+  });
+  res.json(user);
+});
+
+///limit response // querry string
 app.get("/api/users", (req, res) => {
-  res.json(users);
+  const limit = parseInt(req.query.limit);
+  if (!isNaN(limit) && limit > 0) {
+    res.json(users.slice(0, limit));
+  } else {
+    res.json(users);
+  }
 });
 
 ///listen server
