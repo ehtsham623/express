@@ -36,9 +36,9 @@ app.get("/api/users/:id", (req, res) => {
 app.get("/api/users", (req, res) => {
   const limit = parseInt(req.query.limit);
   if (!isNaN(limit) && limit > 0) {
-    res.json(users.slice(0, limit));
+    res.status(200).json(users.slice(0, limit));
   } else {
-    res.json(users);
+    res.status(200).json(users);
   }
 });
 
