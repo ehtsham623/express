@@ -4,10 +4,12 @@ import { fileURLToPath } from "url";
 
 const port = process.env.PORT || 8000;
 import users from "./routes/users.js";
+import logger from "./middleware/logger.js";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(logger);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.join(__dirname, "public")));

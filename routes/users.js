@@ -12,7 +12,6 @@ let users = [
 router.get("/:id", (req, res) => {
   const userId = req.params.id;
   const user = users.find((u) => u.id === userId);
-  console.log(user);
   if (user) {
     res.status(200).json(user);
   } else {
