@@ -2,11 +2,12 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 
-const port = process.env.PORT || 8000;
 import users from "./routes/users.js";
 import logger from "./middleware/logger.js";
 import errorHandler from "./middleware/error.js";
 import notFoundHandler from "./middleware/notFound.js";
+
+const port = process.env.PORT || 8000;
 
 const app = express();
 app.use(express.json());
