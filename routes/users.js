@@ -9,18 +9,20 @@ let users = [
 ];
 
 ///get single post // request params
-router.get("/:id", (req, res) => {
+router.get("/:id", (req, res, next) => {
   const userId = req.params.id;
   const user = users.find((u) => u.id === userId);
   if (user) {
     res.status(200).json(user);
   } else {
-    res.status(400).json({ message: "Post " + userId + " not found" });
+    const error = new Error("Post " + userId + " not found");
+    error.status = 404;
+    return next(error);
   }
 });
 
 ///limit response // querry string
-router.get("/", (req, res) => {
+router.get("/", (req, res, next) => {
   const limit = parseInt(req.query.limit);
   if (!isNaN(limit) && limit > 0) {
     res.status(200).json(users.slice(0, limit));
@@ -30,35 +32,41 @@ router.get("/", (req, res) => {
 });
 
 ///post new user
-router.post("/", (req, res) => {
+router.post("/", (req, res, next) => {
   const newUser = { id: users.length + 1, name: req.body.name };
   if (newUser.name) {
     users.push(newUser);
     res.status(200).json(newUser);
   } else {
-    res.status(404).json({ message: "name is required" });
+    const error = new Error("name is required");
+    error.status = 404;
+    return next(error);
   }
 });
 ///put/update user
-router.put("/:id", (req, res) => {
+router.put("/:id", (req, res, next) => {
   const userId = req.params.id;
   const user = users.find((u) => u.id === userId);
   if (user) {
     user.name = req.body.name;
     res.status(200).json(user);
   } else {
-    res.status(404).json({ message: "user not found" });
+    const error = new Error("user not found");
+    error.status = 404;
+    return next(error);
   }
 });
 ///delete user
-router.delete("/:id", (req, res) => {
+router.delete("/:id", (req, res, next) => {
   const userId = req.params.id;
   const user = users.find((u) => u.id === userId);
   if (user) {
     users = users.filter((user) => user.id != userId);
     res.status(200).json(users);
   } else {
-    res.status(404).json({ message: "user not found" });
+    const error = new Error("user not found");
+    error.status = 404;
+    return next(error);
   }
 });
 

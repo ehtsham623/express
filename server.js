@@ -5,6 +5,8 @@ import { fileURLToPath } from "url";
 const port = process.env.PORT || 8000;
 import users from "./routes/users.js";
 import logger from "./middleware/logger.js";
+import errorHandler from "./middleware/error.js";
+import notFoundHandler from "./middleware/notFound.js";
 
 const app = express();
 app.use(express.json());
@@ -23,6 +25,9 @@ app.get("/about", (req, res) => {
 });
 
 app.use("/api/users", users);
+
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log("Listening on port 8000");
