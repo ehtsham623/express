@@ -7,12 +7,11 @@ import logger from "./middleware/logger.js";
 import errorHandler from "./middleware/error.js";
 import notFoundHandler from "./middleware/notFound.js";
 
-const port = process.env.PORT || 8000;
-
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(logger);
+const port = process.env.PORT || 8000;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.join(__dirname, "public")));
